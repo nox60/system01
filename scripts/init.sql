@@ -150,3 +150,18 @@ CREATE TABLE tb_device(
     `status` tinyint default 0,
     PRIMARY KEY(`device_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS tb_fod;
+CREATE TABLE tb_fod(
+	`fod_id` INT NOT NULL AUTO_INCREMENT,
+    `fod_name` VARCHAR(50) NOT NULL,
+    `account_id` INT(11) NOT NULL,
+    `fod_address` VARCHAR(200) NOT NULL DEFAULT '',
+    `fod_type` TINYINT NOT NULL DEFAULT 0,
+    `fod_body` VARCHAR(1000) NULL DEFAULT '',
+    `level` VARCHAR(50) NULL DEFAULT '',
+    `fod_time` DATETIME NOT NULL DEFAULT '2020-10-10',
+    `create_time` DATETIME NULL DEFAULT '2020-10-10',
+    `status` tinyint default 0,
+    PRIMARY KEY(`fod_id`)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
