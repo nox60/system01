@@ -48,7 +48,7 @@ func AddOrUpdateWorkRecord(c *gin.Context) {
 		return
 	}
 
-	if recordDataBody.RecordId == 0 {
+	if recordDataBody.RecordId <= 0 {
 		// 新增
 		services.AddWorkRecord(&recordDataBody)
 	} else {

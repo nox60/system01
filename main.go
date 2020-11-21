@@ -63,7 +63,7 @@ func main() {
 
 	// 工作记录
 	api.POST("/addOrUpdateWorkRecord", controller.AddOrUpdateWorkRecord)
-	api.DELETE("/deleteWorkRecord/:workRecordId", controller.DeleteWorkRecord)
+	api.DELETE("/deleteWorkRecord/:recordId", controller.DeleteWorkRecord)
 	api.POST("/listWorkRecordData", controller.ListWorkRecordData)
 
 	// -------

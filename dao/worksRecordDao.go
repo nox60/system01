@@ -87,7 +87,7 @@ func AddRecord(recordData *models.WorksRecordDataBody, tx *sql.Tx) (err error) {
 
 	_, err = tx.Exec("INSERT INTO `tb_works_records` (`record_name`,`account_id`, `record_type`,`record_body`,`level`, "+
 		" `record_address`,`status`,`create_time`) "+
-		" values (?,?,?,?,?,?,now()) ",
+		" values (?,?,?,?,?,?,?,now()) ",
 		recordData.RecordName,
 		recordData.AccountId,
 		recordData.RecordType,
