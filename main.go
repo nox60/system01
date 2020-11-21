@@ -76,6 +76,11 @@ func main() {
 	api.DELETE("/deleteDevice/:deviceId", controller.DeleteDevice)
 	api.POST("/listDeviceData", controller.ListDeviceData)
 
+	// FOD
+	api.POST("/addOrUpdateFod", controller.AddOrUpdateFod)
+	api.DELETE("/deleteFod/:fodId", controller.DeleteFod)
+	api.POST("/listFodData", controller.ListFodData)
+
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 
