@@ -184,11 +184,11 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	}
 
 	queryStm.WriteString(" GROUP BY a.`account_id` ")
-	queryStm.WriteString(" ORDER BY a.`account_id` DESC ")
+	queryStm.WriteString(" ORDER BY a.`account_id` ASC ")
 	queryStm.WriteString(" LIMIT ?,? ")
 
 	countQueryStm.WriteString(" GROUP BY a.`account_id` ")
-	countQueryStm.WriteString(" ORDER BY a.`account_id` DESC ")
+	countQueryStm.WriteString(" ORDER BY a.`account_id` ASC ")
 
 	// 分页查询记录
 	stmt, err := MysqlDb.Prepare(queryStm.String())
@@ -208,7 +208,8 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	countResult := stmtCount.QueryRow(fetchArgs...)
 
 	if err := countResult.Scan(&totalCount); err != nil {
-		fmt.Printf("scan failed, err:%v", err)
+		fmt.Println("Scan failed, ERR: ", err)
+		fmt.Println(queryStm.String())
 	}
 
 	// 查询分页数据
@@ -218,6 +219,7 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 
 	if err != nil {
 		fmt.Println(err)
+		fmt.Println(queryStm.String())
 		return results, 0, err
 	}
 
