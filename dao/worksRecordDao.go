@@ -32,7 +32,7 @@ func ListWorksRecordData(fetchDataBody *models.WorksRecordRequestBody) (dataResB
 
 	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_works_records WHERE 1=1 ")
 	// 查询条件.
-	if fetchDataBody.RecordId > -1 {
+	if fetchDataBody.RecordId > 0 {
 		queryStm.WriteString(" AND record_id = ? ")
 		countQueryStm.WriteString(" AND record_id = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.RecordId)
