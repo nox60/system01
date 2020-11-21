@@ -1,0 +1,61 @@
+env.BUILD_VERSION      = null
+env.CURRENT_STAGE      = null
+env.FAILED_REASON      = null
+env.CURRENT_BRANCH     = null
+
+
+//94.191.74.113
+//182.254.152.185
+
+node {
+    //拉取代码
+    stage ('Check out'){
+        print "Current branch is ${env.CURRENT_BRANCH}"
+
+        try{
+            git  url: "https://gitee.com/nox/system01.git", credentialsId: "nox-gitee", branch: "master"
+        }catch(e){
+            env.CURRENT_STAGE = '拉取GIT代码'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+    //构建程序
+    stage ('Build'){
+        try{
+                docker.image('ccr.ccs.tencentyun.com/nox600/golang:1.14-alpine').inside('-v /opt/local/go_dir_for_jenkins:/usr/local/go_dir -e GO111MODULE="on" -e GOPROXY="https://goproxy.cn/" -e GOCACHE="/root/.cache/go-build" ') {
+                    sh 'rm -rf go.mod'
+                    sh 'go mod init system01'
+                    sh 'go build'
+                }
+        } catch(e){
+            env.CURRENT_STAGE = '编译代码'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+
+    //构建前端程序
+    stage ('Build docker image and push to registry'){
+        def dockerImageCore = null
+        try{
+            sh 'cp ./devOps/Dockerfile ./Dockerfile'
+            sh 'cp /usr/share/zoneinfo/Asia/Shanghai .'
+            dockerImageCore = docker.build("ccr.ccs.tencentyun.com/nox600/system01")
+            docker.withRegistry("https://ccr.ccs.tencentyun.com","nox_tencent_reg") {
+                            dockerImageCore.push('0.0.1')
+            }
+        }catch(e){
+            env.CURRENT_STAGE = '打包镜像 & 推送到仓库'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+}
+
