@@ -121,14 +121,16 @@ CREATE TABLE tb_works_records(
     PRIMARY KEY(`record_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS tb_tasks_records;
-CREATE TABLE tb_tasks_records(
+DROP TABLE IF EXISTS tb_task;
+CREATE TABLE tb_task(
 	`task_id` INT NOT NULL AUTO_INCREMENT,
     `task_name` VARCHAR(50) NOT NULL,
     `account_id` INT(11) NOT NULL,
     `task_address` VARCHAR(200) NOT NULL DEFAULT '',
+    `task_type` TINYINT NOT NULL DEFAULT 0,
     `task_body` VARCHAR(1000) NULL DEFAULT '',
     `level` VARCHAR(50) NULL DEFAULT '',
+    `task_time` DATETIME NOT NULL DEFAULT '2020-10-10',
     `create_time` DATETIME NULL DEFAULT '2020-10-10',
     `status` tinyint default 0,
     PRIMARY KEY(`task_id`)

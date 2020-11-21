@@ -23,5 +23,6 @@ type TaskDataBody struct {
 	Level       int    `json:"level"`
 	TaskAddress string `json:"taskAddress"`
 	CreateTime  string `json:"createTime"`
+	TaskTime    string `json:"taskTime"`
 	Status      int    `json:"status"`
 }

@@ -27,10 +27,10 @@ func ListTaskData(fetchDataBody *models.TaskRequestBody) (dataResBody []models.T
 
 	queryStm.WriteString(" SELECT `task_id`, `task_name`, ")
 	queryStm.WriteString(" `account_id`, `task_type`,`task_body`,`level`,`task_address`,`create_time` ,")
-	queryStm.WriteString(" `status` ")
-	queryStm.WriteString("  FROM tb_works_tasks WHERE 1=1 ")
+	queryStm.WriteString(" `status`, `task_time` ")
+	queryStm.WriteString("  FROM tb_task WHERE 1=1 ")
 
-	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_works_tasks WHERE 1=1 ")
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_task WHERE 1=1 ")
 	// 查询条件.
 	if fetchDataBody.TaskId > 0 {
 		queryStm.WriteString(" AND task_id = ? ")
@@ -41,8 +41,16 @@ func ListTaskData(fetchDataBody *models.TaskRequestBody) (dataResBody []models.T
 	queryStm.WriteString("LIMIT ?,? ")
 
 	// 分页查询记录
-	stmt, _ := MysqlDb.Prepare(queryStm.String())
-	stmtCount, _ := MysqlDb.Prepare(countQueryStm.String())
+	stmt, err := MysqlDb.Prepare(queryStm.String())
+	if err != nil {
+		println(" SQL PREPARE ERROR: ", err)
+	}
+
+	stmtCount, err := MysqlDb.Prepare(countQueryStm.String())
+	if err != nil {
+		println(" COUNT SQL PREPARE ERROR: ", err)
+	}
+
 	defer stmt.Close()
 	defer stmtCount.Close()
 
@@ -72,7 +80,8 @@ func ListTaskData(fetchDataBody *models.TaskRequestBody) (dataResBody []models.T
 			&dataObj.Level,
 			&dataObj.TaskAddress,
 			&dataObj.CreateTime,
-			&dataObj.Status)
+			&dataObj.Status,
+			&dataObj.TaskTime)
 		results = append(results, dataObj)
 	}
 
@@ -85,8 +94,8 @@ func AddTask(taskData *models.TaskDataBody, tx *sql.Tx) (err error) {
 	//queryStm.WriteString(" `account_id`, `task_type`,`task_body`,`level`,`task_address`,`create_time` ,")
 	//queryStm.WriteString(" `status` ")
 
-	_, err = tx.Exec("INSERT INTO `tb_works_tasks` (`task_name`,`account_id`, `task_type`,`task_body`,`level`, "+
-		" `task_address`,`status`,`create_time`) "+
+	_, err = tx.Exec("INSERT INTO `tb_task` (`task_name`,`account_id`, `task_type`,`task_body`,`level`, "+
+		" `task_address`,`status`,`task_time`,`create_time`) "+
 		" values (?,?,?,?,?,?,?,now()) ",
 		taskData.TaskName,
 		taskData.AccountId,
@@ -94,7 +103,9 @@ func AddTask(taskData *models.TaskDataBody, tx *sql.Tx) (err error) {
 		taskData.TaskBody,
 		taskData.Level,
 		taskData.TaskAddress,
-		taskData.Status)
+		taskData.Status,
+		taskData.TaskTime,
+	)
 	if err != nil {
 		return err
 	}
@@ -102,7 +113,7 @@ func AddTask(taskData *models.TaskDataBody, tx *sql.Tx) (err error) {
 }
 
 func DeleteTask(taskId int, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("DELETE FROM `tb_works_tasks` WHERE task_id = ? ",
+	_, err = tx.Exec("DELETE FROM `tb_task` WHERE task_id = ? ",
 		taskId)
 	if err != nil {
 		return err
@@ -111,8 +122,8 @@ func DeleteTask(taskId int, tx *sql.Tx) (err error) {
 }
 
 func UpdateTaskById(taskData *models.TaskDataBody, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("UPDATE `tb_works_tasks` SET task_name = ?, task_type = ?, task_body = ?, `level` = ?, `task_address` = ?, `account_id` = ? ,`status` = ? WHERE task_id = ? ",
-		taskData.TaskName, taskData.TaskType, taskData.TaskBody, taskData.Level, taskData.TaskAddress, taskData.AccountId, taskData.Status, taskData.TaskId)
+	_, err = tx.Exec("UPDATE `tb_task` SET task_name = ?, task_type = ?, task_body = ?, `level` = ?, `task_address` = ?, `account_id` = ? ,`status` = ?, `task_time` = ?  WHERE task_id = ? ",
+		taskData.TaskName, taskData.TaskType, taskData.TaskBody, taskData.Level, taskData.TaskAddress, taskData.AccountId, taskData.Status, taskData.TaskTime, taskData.TaskId)
 	if err != nil {
 		return err
 	}
