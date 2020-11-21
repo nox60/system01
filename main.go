@@ -66,7 +66,10 @@ func main() {
 	api.DELETE("/deleteWorkRecord/:recordId", controller.DeleteWorkRecord)
 	api.POST("/listWorkRecordData", controller.ListWorkRecordData)
 
-	// -------
+	// 排班安排
+	api.POST("/addOrUpdateTask", controller.AddOrUpdateTask)
+	api.DELETE("/deleteTask/:taskId", controller.DeleteTask)
+	api.POST("/listTaskData", controller.ListTaskData)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
