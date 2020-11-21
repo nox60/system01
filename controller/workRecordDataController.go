@@ -26,7 +26,7 @@ func ListWorkRecordData(c *gin.Context) {
 
 	// worksRecordRequestBody.RecordId = -1
 
-	results, totalCount, err := dao.ListWorksRecordData(&worksRecordRequestBody)
+	results, totalCount, err := services.ListWorksRecordData(&worksRecordRequestBody)
 
 	if err != nil {
 		fmt.Println(err)
