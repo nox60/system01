@@ -111,8 +111,8 @@ func DeleteRecord(recordId int, tx *sql.Tx) (err error) {
 }
 
 func UpdateRecordById(recordData *models.WorksRecordDataBody, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("UPDATE `tb_works_records` SET record_name = ?, record_type = ?, record_body = ?, `level` = ?, `record_address` = ? ,`status` = ? WHERE record_id = ? ",
-		recordData.RecordName, recordData.RecordType, recordData.RecordBody, recordData.Level, recordData.RecordAddress, recordData.Status, recordData.RecordId)
+	_, err = tx.Exec("UPDATE `tb_works_records` SET record_name = ?, record_type = ?, record_body = ?, `level` = ?, `record_address` = ?, `account_id` = ? ,`status` = ? WHERE record_id = ? ",
+		recordData.RecordName, recordData.RecordType, recordData.RecordBody, recordData.Level, recordData.RecordAddress, recordData.AccountId, recordData.Status, recordData.RecordId)
 	if err != nil {
 		return err
 	}
