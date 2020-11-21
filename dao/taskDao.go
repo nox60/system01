@@ -90,13 +90,9 @@ func ListTaskData(fetchDataBody *models.TaskRequestBody) (dataResBody []models.T
 
 func AddTask(taskData *models.TaskDataBody, tx *sql.Tx) (err error) {
 
-	//queryStm.WriteString(" SELECT `task_id`, `task_name`, ")
-	//queryStm.WriteString(" `account_id`, `task_type`,`task_body`,`level`,`task_address`,`create_time` ,")
-	//queryStm.WriteString(" `status` ")
-
 	_, err = tx.Exec("INSERT INTO `tb_task` (`task_name`,`account_id`, `task_type`,`task_body`,`level`, "+
 		" `task_address`,`status`,`task_time`,`create_time`) "+
-		" values (?,?,?,?,?,?,?,now()) ",
+		" values (?,?,?,?,?,?,?,?,now()) ",
 		taskData.TaskName,
 		taskData.AccountId,
 		taskData.TaskType,
