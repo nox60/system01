@@ -135,3 +135,18 @@ CREATE TABLE tb_task(
     `status` tinyint default 0,
     PRIMARY KEY(`task_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS tb_device;
+CREATE TABLE tb_device(
+	`device_id` INT NOT NULL AUTO_INCREMENT,
+    `device_name` VARCHAR(50) NOT NULL,
+    `account_id` INT(11) NOT NULL,
+    `device_address` VARCHAR(200) NOT NULL DEFAULT '',
+    `device_type` TINYINT NOT NULL DEFAULT 0,
+    `device_body` VARCHAR(1000) NULL DEFAULT '',
+    `level` VARCHAR(50) NULL DEFAULT '',
+    `device_time` DATETIME NOT NULL DEFAULT '2020-10-10',
+    `create_time` DATETIME NULL DEFAULT '2020-10-10',
+    `status` tinyint default 0,
+    PRIMARY KEY(`device_id`)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
