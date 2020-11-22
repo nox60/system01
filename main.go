@@ -8,6 +8,7 @@ import (
 	"os"
 	"system01/controller"
 	"system01/dao"
+	"system01/models"
 	"system01/utils"
 )
 
@@ -103,16 +104,20 @@ func Authorize() gin.HandlerFunc {
 		if err != nil {
 			fmt.Println("拦截，不让通过")
 			c.Abort()
-			c.JSON(http.StatusUnauthorized, gin.H{"message": "访问未授权"})
+
+			resultMsg := new(models.HttpResult)
+			resultMsg.Code = 11000
+			resultMsg.Msg = "用户没有登录或者登录信息过期，请登录！"
+
+			c.JSON(http.StatusOK, resultMsg)
 			// return可省略, 只要前面执行Abort()就可以让后面的handler函数不再执行
 			return
 		} else {
-			fmt.Println(parsedToken)
-			//每次请求只有要刷新token
+			// fmt.Println(parsedToken)
+			// 每次请求只有要刷新token
 			refreshedToken := utils.RefreshToken(parsedToken)
-			//fmt.Println(refreshedToken)
+			// fmt.Println(refreshedToken)
 
-			fmt.Println("允许通过")
 			//刷新token
 			c.Writer.Header().Set("x-token-rep", refreshedToken)
 			c.Next()

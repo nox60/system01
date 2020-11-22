@@ -23,6 +23,7 @@ func JwtParse(signedStr string) (jwtToken *jwt.Token, err error) {
 func JwtSign(subject string) (signedStr string) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
+	// claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["iat"] = time.Now().Unix()
 	claims["sub"] = subject

@@ -73,6 +73,8 @@ func JsonLogin(c *gin.Context) {
 
 func UserInfo(c *gin.Context) {
 
+	fmt.Println("请求 userinfo接口")
+
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
 	resultMsg.Msg = "获取用户信息成功"
