@@ -20,7 +20,7 @@ type FodDataBody struct {
 	AccountId  int    `json:"accountId"  `
 	FodType    int    `json:"fodType"  `
 	FodBody    string `json:"fodBody"`
-	Level      int    `json:"level"`
+	Level      string `json:"level"`
 	FodAddress string `json:"fodAddress"`
 	CreateTime string `json:"createTime"`
 	FodTime    string `json:"fodTime"`

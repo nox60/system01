@@ -96,10 +96,8 @@ func main() {
 
 func Authorize() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		// 首先判断token解析是否合法，如果不合法则提示访问未授权
 		xToken := c.Request.Header.Get("X-Token")
-
 		parsedToken, err := utils.JwtParse(xToken)
 
 		if err != nil {
@@ -112,7 +110,7 @@ func Authorize() gin.HandlerFunc {
 			fmt.Println(parsedToken)
 			//每次请求只有要刷新token
 			refreshedToken := utils.RefreshToken(parsedToken)
-			fmt.Println(refreshedToken)
+			//fmt.Println(refreshedToken)
 
 			fmt.Println("允许通过")
 			//刷新token
