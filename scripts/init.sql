@@ -166,7 +166,6 @@ CREATE TABLE tb_fod(
     PRIMARY KEY(`fod_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-
 DROP TABLE IF EXISTS tb_patrol;
 CREATE TABLE tb_patrol(
 	`patrol_id` INT NOT NULL AUTO_INCREMENT,
@@ -180,4 +179,19 @@ CREATE TABLE tb_patrol(
     `create_time` DATETIME NULL DEFAULT '2020-10-10',
     `status` tinyint default 0,
     PRIMARY KEY(`patrol_id`)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS tb_construct;
+CREATE TABLE tb_construct(
+	`construct_id` INT NOT NULL AUTO_INCREMENT,
+    `construct_name` VARCHAR(50) NOT NULL,
+    `account_id` INT(11) NOT NULL,
+    `construct_address` VARCHAR(200) NOT NULL DEFAULT '',
+    `construct_type` TINYINT NOT NULL DEFAULT 0,
+    `construct_body` VARCHAR(1000) NULL DEFAULT '',
+    `level` VARCHAR(50) NULL DEFAULT '',
+    `construct_time` DATETIME NOT NULL DEFAULT '2020-10-10',
+    `create_time` DATETIME NULL DEFAULT '2020-10-10',
+    `status` tinyint default 0,
+    PRIMARY KEY(`construct_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
