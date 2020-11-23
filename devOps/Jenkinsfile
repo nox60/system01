@@ -47,7 +47,7 @@ node {
             sh 'cp /usr/share/zoneinfo/Asia/Shanghai .'
             dockerImageCore = docker.build("ccr.ccs.tencentyun.com/nox600/system01")
             docker.withRegistry("https://ccr.ccs.tencentyun.com","nox_tencent_reg") {
-                            dockerImageCore.push('0.0.1')
+                            dockerImageCore.push('0.0.2')
             }
         }catch(e){
             env.CURRENT_STAGE = '打包镜像 & 推送到仓库'
