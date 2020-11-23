@@ -13,7 +13,7 @@ node {
         print "Current branch is ${env.CURRENT_BRANCH}"
 
         try{
-            git  url: "https://gitee.com/nox/system01.git", credentialsId: "nox-gitee", branch: "master"
+            git  url: "https://github.com/nox60/system01.git", credentialsId: "nox-gitee", branch: "master"            
         }catch(e){
             env.CURRENT_STAGE = '拉取GIT代码'
             env.FAILED_REASON = e
