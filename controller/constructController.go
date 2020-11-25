@@ -81,11 +81,8 @@ func GetConstruct(c *gin.Context) {
 	resultMsg.Msg = "获取数据成功"
 
 	var constructRequestBody models.ConstructRequestBody
-
 	constructId, err := strconv.Atoi(constructIdStr)
-
 	constructRequestBody.ConstructId = constructId
-
 	results, _, err := dao.ListConstructData(&constructRequestBody)
 
 	if err != nil {

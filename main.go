@@ -113,10 +113,8 @@ func Authorize() gin.HandlerFunc {
 			// return可省略, 只要前面执行Abort()就可以让后面的handler函数不再执行
 			return
 		} else {
-			// fmt.Println(parsedToken)
 			// 每次请求只有要刷新token
 			refreshedToken := utils.RefreshToken(parsedToken)
-			// fmt.Println(refreshedToken)
 
 			//刷新token
 			c.Writer.Header().Set("x-token-rep", refreshedToken)
