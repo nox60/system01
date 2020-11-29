@@ -183,6 +183,12 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 		fetchArgs = append(fetchArgs, fetchDataBody.AccountId)
 	}
 
+	if len(fetchDataBody.UserName) > 0 {
+		queryStm.WriteString(" AND a.user_name = ? ")
+		countQueryStm.WriteString(" AND a.user_name = ? ")
+		fetchArgs = append(fetchArgs, fetchDataBody.UserName)
+	}
+
 	queryStm.WriteString(" GROUP BY a.`account_id` ")
 	queryStm.WriteString(" ORDER BY a.`account_id` ASC ")
 	queryStm.WriteString(" LIMIT ?,? ")

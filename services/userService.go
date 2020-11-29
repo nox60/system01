@@ -196,3 +196,40 @@ func ResetUserByAccountIdAndPassword(accountId int, password string) {
 	// 将用户active_str字段设置为8位随机字符+数字格式，将用户名和密码拼接，并加上盐值，计算md5值
 
 }
+
+func ActiveUserByUserNameAndPassword(userName string, password string) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+	// 首先通过用戶名获取用户ID
+	userReqBody := models.User{}
+
+	userReqBody.UserName = userName
+
+	userDataResults, _, err := dao.RetrieveUsersData(&userReqBody)
+	// 然后根据用户ID获取对应的用户
+	tempUser := dao.RetrieveUserByAccountId(userDataResults[0].AccountId)
+	// 将用户状态 status 设置为 0，未激活状态
+
+	// 获取自动生成的8位新密码
+	// tempUser.ActiveStr = utils.CreateRandomString(8)
+	// tempUser.Password = utils.MD5(tempUser.UserName + tempUser.ActiveStr)
+	tempUser.Password = utils.GetEncryptedPasswd(tempUser.UserName, password)
+	tempUser.Status = 1
+	tempUser.ActiveStr = password
+	// 更新用户
+	dao.UpdateUserByAccountId(tempUser, tx)
+
+}
