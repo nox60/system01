@@ -218,6 +218,9 @@ func ActiveUserByUserNameAndPassword(userName string, password string) {
 
 	userReqBody.UserName = userName
 
+	userReqBody.Page = 1
+	userReqBody.Limit = 1
+
 	userDataResults, _, err := dao.RetrieveUsersData(&userReqBody)
 	// 然后根据用户ID获取对应的用户
 	tempUser := dao.RetrieveUserByAccountId(userDataResults[0].AccountId)
