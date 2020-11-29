@@ -15,8 +15,8 @@ type User struct {
 	RealName        string `json:"realName"`
 	RoleIds         []int  `json:"roleIds"`
 	Password        string
-	ActivePassword  string
-	ActivePassword2 string
+	ActivePassword  string `json:"activePassword"`
+	ActivePassword2 string `json:"activePassword2"`
 	Roles           []Role `json:"roles"`
 	Page            int    `json:"page"  `
 	Limit           int    `json:"limit" `
