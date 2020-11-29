@@ -171,6 +171,38 @@ func AddOrUpdateUser(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
+func ActiveUser(c *gin.Context) {
+
+	var userReqbody models.User
+
+	if err := c.ShouldBindJSON(&userReqbody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 判断两次密码是否长度都超过6位（未来会做更严格的判断，比如是否包含足够的大小写和数字，以及不包含其他特殊字符等）
+	if len(userReqbody.ActivePassword) < 6 || len(userReqbody.ActivePassword2) < 6 {
+		resultMsg := new(models.HttpResult)
+		resultMsg.Code = 20000
+		resultMsg.Msg = "激活用户失败，两次密码均需要超过6位，并且一致"
+		c.JSON(200, resultMsg)
+	}
+
+	//if userReqbody.AccountId <= 0 {
+	//	// 新增
+	//	services.AddUser(&userReqbody)
+	//} else {
+	//	// 更新
+	//	services.UpdateUser(&userReqbody)
+	//}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增用户信息成功"
+	c.JSON(200, resultMsg)
+}
+
 func DeleteUser(c *gin.Context) {
 	idStr := c.Param("accountId")
 	id, _ := strconv.Atoi(idStr)

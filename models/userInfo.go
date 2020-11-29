@@ -10,22 +10,24 @@ type UserInfo struct {
 }
 
 type User struct {
-	AccountId int    `json:"accountId"`
-	UserName  string `json:"userName"`
-	RealName  string `json:"realName"`
-	RoleIds   []int  `json:"roleIds"`
-	Password  string
-	Roles     []Role `json:"roles"`
-	Page      int    `json:"page"  `
-	Limit     int    `json:"limit" `
-	Age       int    `json:"age"`
-	FunStr    string `json:"funStr"`
-	RoleStr   string `json:"roleStr"`
-	ItemStr   string `json:"itemStr"`
-	Status    int    `json:"status"`
-	ActiveStr string `json:"activeStr"`
-	UserType  int    `json:"userType"`
-	ForCount  bool
+	AccountId       int    `json:"accountId"`
+	UserName        string `json:"userName"`
+	RealName        string `json:"realName"`
+	RoleIds         []int  `json:"roleIds"`
+	Password        string
+	ActivePassword  string
+	ActivePassword2 string
+	Roles           []Role `json:"roles"`
+	Page            int    `json:"page"  `
+	Limit           int    `json:"limit" `
+	Age             int    `json:"age"`
+	FunStr          string `json:"funStr"`
+	RoleStr         string `json:"roleStr"`
+	ItemStr         string `json:"itemStr"`
+	Status          int    `json:"status"`
+	ActiveStr       string `json:"activeStr"`
+	UserType        int    `json:"userType"`
+	ForCount        bool
 }
 
 func (reqBody *User) GetStartByPageAndLimit() int {
