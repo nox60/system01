@@ -61,6 +61,7 @@ func main() {
 	api.GET("/getFunctionItemById/:itemId", controller.GetFunctionItemById)
 	api.DELETE("/deleteUser/:accountId", controller.DeleteUser)
 	api.PUT("/resetUser/:accountId", controller.ResetUser)
+	api.POST("/activeUser", controller.ActiveUser)
 
 	// 工作记录
 	api.POST("/addOrUpdateWorkRecord", controller.AddOrUpdateWorkRecord)
