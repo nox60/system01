@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"system01/constants"
 	"system01/dao"
 	"system01/models"
 	"system01/services"
@@ -184,11 +185,12 @@ func ActiveUser(c *gin.Context) {
 	// 判断两次密码是否长度都超过6位（未来会做更严格的判断，比如是否包含足够的大小写和数字，以及不包含其他特殊字符等）
 	if len(userReqbody.ActivePassword) < 6 || len(userReqbody.ActivePassword2) < 6 {
 		resultMsg := new(models.HttpResult)
-		resultMsg.Code = 20000
-		resultMsg.Msg = "激活用户失败，两次密码均需要超过6位，并且一致"
+		resultMsg.Code = constants.PASSWORD_NOT_SAME
+		resultMsg.Msg = constants.GetResultMsgByCode(resultMsg.Code)
 		c.JSON(200, resultMsg)
-	}
+	} else { // 校验通过，激活用戶
 
+	}
 	//if userReqbody.AccountId <= 0 {
 	//	// 新增
 	//	services.AddUser(&userReqbody)
