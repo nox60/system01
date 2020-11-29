@@ -37,6 +37,7 @@ func main() {
 	api.POST("/checkLogin", controller.JsonLogin)
 	api.GET("/pid/:id", controller.GetRoleByParentId)
 	api.GET("/resetUserUACNOTADSADUnder/:accountId", controller.ResetUser)
+	api.POST("/activeUser", controller.ActiveUser)
 
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
@@ -61,7 +62,6 @@ func main() {
 	api.GET("/getFunctionItemById/:itemId", controller.GetFunctionItemById)
 	api.DELETE("/deleteUser/:accountId", controller.DeleteUser)
 	api.PUT("/resetUser/:accountId", controller.ResetUser)
-	api.POST("/activeUser", controller.ActiveUser)
 
 	// 工作记录
 	api.POST("/addOrUpdateWorkRecord", controller.AddOrUpdateWorkRecord)
