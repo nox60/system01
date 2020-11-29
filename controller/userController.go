@@ -189,20 +189,12 @@ func ActiveUser(c *gin.Context) {
 		resultMsg.Msg = constants.GetResultMsgByCode(resultMsg.Code)
 		c.JSON(200, resultMsg)
 	} else { // 校验通过，激活用戶
-
+		services.ActiveUserByUserNameAndPassword(userReqbody.UserName, userReqbody.ActivePassword)
+		resultMsg := new(models.HttpResult)
+		resultMsg.Code = 20000
+		resultMsg.Msg = "激活用户信息成功！请用新的密码登录系统！"
+		c.JSON(200, resultMsg)
 	}
-	//if userReqbody.AccountId <= 0 {
-	//	// 新增
-	//	services.AddUser(&userReqbody)
-	//} else {
-	//	// 更新
-	//	services.UpdateUser(&userReqbody)
-	//}
-
-	resultMsg := new(models.HttpResult)
-	resultMsg.Code = 20000
-	resultMsg.Msg = "新增用户信息成功"
-	c.JSON(200, resultMsg)
 }
 
 func DeleteUser(c *gin.Context) {
