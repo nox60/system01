@@ -35,12 +35,12 @@ func main() {
 
 	//以下接口不需要鉴权
 	api.POST("/checkLogin", controller.JsonLogin)
-	api.GET("/pid/:id", controller.GetRoleByParentId)
 	api.GET("/resetUserUACNOTADSADUnder/:accountId", controller.ResetUser)
 	api.POST("/activeUser", controller.ActiveUser)
 
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
+	api.GET("/pid/:id", controller.GetRoleByParentId)
 
 	api.POST("/addOrUpdateUser", controller.AddOrUpdateUser)
 	api.GET("/userInfo", controller.UserInfo)
@@ -104,6 +104,8 @@ func Authorize() gin.HandlerFunc {
 
 		if err != nil {
 			fmt.Println("拦截，不让通过")
+			fmt.Println("ERR  : ", err)
+			fmt.Println("Token: ", xToken)
 			c.Abort()
 
 			resultMsg := new(models.HttpResult)
